@@ -1,6 +1,7 @@
 {
-  "name": "Animalandia Tetris",
-  "short_name": "Animalandia Tetris",
+  "name": "Cosmic Combat Tetris",
+  "short_name": "CosmicTetris",
+  "description": "A high-tech, space-themed twin-grid competitive puzzle arcade terminal featuring real-time ghost-tracking and interactive tactile controls.",
   "start_url": "index.html",
   "display": "fullscreen",
   "background_color": "#0f0c29",
