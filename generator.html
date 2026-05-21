@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cosmic Icon Generator Module</title>
+    <style>
+        body {
+            background: #0f0c29;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        .btn {
+            background: #6c5ce7;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px;
+            box-shadow: 0 0 15px rgba(108, 92, 231, 0.5);
+        }
+        .btn:hover { background: #a29bfe; }
+        canvas { display: none; }
+    </style>
+</head>
+<body>
+    <h1>🛰️ Cosmic Icon Generator</h1>
+    <p>Click each button below to dynamically generate and download your compliant PWA PNG assets!</p>
+    
+    <button class="btn" onclick="generateIcon(192, 'icon-192.png')">Download 192x192 Icon</button>
+    <button class="btn" onclick="generateIcon(512, 'icon-512.png')">Download 512x512 Icon</button>
+
+    <canvas id="exportCanvas"></canvas>
+
+    <script>
+        function generateIcon(size, filename) {
+            const canvas = document.getElementById('exportCanvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = size;
+            canvas.height = size;
+
+            // 1. Draw Space Background Gradient
+            const gradient = ctx.createRadialGradient(size/2, 0, 0, size/2, 0, size);
+            gradient.addColorStop(0, '#1b1445');
+            gradient.addColorStop(0.5, '#0f0c29');
+            gradient.addColorStop(1, '#050510');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, size, size);
+
+            // 2. Draw Futuristic Neon Circular Radar Ring
+            ctx.beginPath();
+            ctx.arc(size/2, size/2, size * 0.38, 0, 2 * Math.PI);
+            ctx.strokeStyle = '#6c5ce7';
+            ctx.lineWidth = size * 0.03;
+            ctx.globalAlpha = 0.5;
+            ctx.stroke();
+            ctx.globalAlpha = 1.0;
+
+            // 3. Scale and Render Neo-T-Tetromino Block Configuration
+            const blockSize = size * 0.12;
+            const startX = size / 2 - (blockSize * 1.5);
+            const startY = size / 2 - (blockSize * 0.5);
+
+            ctx.fillStyle = '#00ffcc';
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = size * 0.01;
+
+            const blocks = [
+                {x: 0, y: 1}, {x: 1, y: 1}, {x: 2, y: 1}, // Base row
+                {x: 1, y: 0}                              // Top center spike
+            ];
+
+            blocks.forEach(b => {
+                const bx = startX + (b.x * (blockSize + size * 0.01));
+                const by = startY + (b.y * (blockSize + size * 0.01));
+                
+                // Draw Block Solid Base
+                ctx.fillRect(bx, by, blockSize, blockSize);
+                ctx.strokeRect(bx, by, blockSize, blockSize);
+                
+                // Draw Gloss Highlight Overlay
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.25)';
+                ctx.fillRect(bx, by, blockSize, size * 0.015);
+                ctx.fillRect(bx, by, size * 0.015, blockSize);
+                ctx.fillStyle = '#00ffcc'; // Reset fill color
+            });
+
+            // 4. Transform Matrix Canvas Data into Fetchable Image File Stream
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+    </script>
+</body>
+</html>
