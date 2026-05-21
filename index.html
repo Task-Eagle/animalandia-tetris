@@ -430,6 +430,22 @@
     </div>
 
     <script>
+
+        // ==========================================
+        // PWA SERVICE WORKER REGISTRATION
+        // ==========================================
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+            .then(registration => {
+                console.log('🛰️ Cosmic Service Worker deployed successfully:', registration.scope);
+            })
+            .catch(error => {
+                console.error('💥 Telemetry Alert: Service Worker launch failed:', error);
+            });
+    });
+}
+        
         // ==========================================
         // 1. SPACE BACKGROUND SYSTEM
         // ==========================================
